@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+   <h1>JMX helper</h1>
+</header>
+<body>
+<link href="js/styles.css" rel="stylesheet">
+<script src="js/clipboard.min.js"></script>
+<script src="js/reelset.js" type="text/javascript"></script>
+<script src="js/init.js" type="text/javascript"></script>
+    
+<div class="container">
+    <div class="reelset"></div>
+    <div class="symbolPosition"></div>
+</div>
+    
+    
+    <div class="navigation" >
+    <p>Result of click</p>
+    <button class="btn-clipboard" data-clipboard-target="#copyRes">
+        Copy
+    </button>
+    <script>
+        new Clipboard('div+button');
+    </script>
+</div>
+
+        
+
+<script type="text/javascript">
+    
+    
+    var reelset = document.getElementsByClassName("reelset")[0];
+    
+    for (var i = 0; i < reelsetData.length; i++){
+        
+        var reelContainer = document.createElement("div");
+        reelContainer.className = "reelContainer reelContainer-" + i;
+        reelset.appendChild(reelContainer);
+        
+        var title = document.createElement("p");
+        title.className = "reelTitle";
+        reelContainer.appendChild(title);
+                
+        var reel = document.createElement("div");
+        reel.className = "reel reel-" + i;
+        reelContainer.appendChild(reel);
+        
+        outputSymbolsPosition(i);
+        for (var j = 0; j < reelsetData[i].length; j++){
+            var symbol = document.createElement("div");
+            symbol.setAttribute("number", j);
+            symbol.setAttribute("rs", i);
+            symbol.className = "symbol " + reelsetData[i][j];
+            
+            symbol.onclick = function() {printSymbolPosition(symbol)};
+            
+            reel.appendChild(symbol);                
+            
+            
+        }
+        
+        
+            
+    }
+    
+    //
+    
+    function outputSymbolsPosition(reelsAmount){
+       
+        for (var i = 0; i < reelsAmount; i++){
+            var positionContainer = document.createElement("div");
+            positionContainer.className = "positionContainer";
+            reelset.appendChild(reelContainer);
+            }
+    }
+    
+    
+    // Printout symbol position after click
+    
+    function printSymbolPosition(symbol) {
+        
+        var symbolPosition = document.getElementsByClassName("symbolPosition")[0];
+        var reel = symbol.getAttribute("rs");
+        symbolPosition.className = "symbolOnReel symbolOnReel" + reel;
+            
+        var symbolNumber = symbol.getAttribute("number");         
+        symbolPosition.innerHTML = symbolNumber + ',';
+            
+
+    }
+    
+    //Print out reel after click
+    
+    function reelStripView (symbolPosition, raws){
+        //reelStripView.innerHTML = "";
+        
+       var reelStripView = document.getElementsByClassName("reelStripView")[0]; 
+       for (var i = 0; i < raws; i++) {
+          var reelStrip = document.createElement("div");
+          reelStrip.innerHTML = reelsetData[reel][+symbolNumber + i];
+          reelStripView.appendChild(reelStrip);
+            }
+        
+    }
+    
+
+</script>
+</body>
+</html>
