@@ -12,6 +12,7 @@
 <div class="container">
     <div class="reelset"></div>
     <div class="symbolPosition"></div>
+    <div class="reelsView"></div>
 </div>
     
     
@@ -53,15 +54,45 @@
             symbol.setAttribute("rs", i);
             symbol.className = "symbol " + reelsetData[i][j];
             
-            symbol.onclick = function() {printSymbolPosition(symbol)};
+            symbol.onclick = function() {
+                var reel = this.getAttribute("rs");
+                var symbolNumber = this.getAttribute("number");
+                var symbolPositionOnReel = document.getElementsByClassName("symbolOnReel-"+reel)[0];
+                
+                symbolPositionOnReel.innerHTML = symbolNumber + ',';
+                
+                for(var i=0; i< raws; i++){
+                    var reelViewSymbol = document.createElement("div");
+                    var reelsViewResult = document.getElementsByClassName("reelsViewResult-"+reel)[0]
+                    reelViewSymbol.innerHTML = reelsetsData[reel][+reelViewSymbol + i];
+                    reelsViewResult.appendChild(reelViewSymbol);
+                }
+                
+                
+            };
             
             reel.appendChild(symbol);                
-            
-            
+              
         }
         
         
             
+    }
+    
+    var symbolPosition = document.getElementsByClassName("symbolPosition")[0];
+    
+    for (var i = 0; i< reelsetData.length; i++){
+       symbolOnReel = document.createElement("div");
+       symbolOnReel.className = "symbolOnReel symbolOnReel-" + i;
+       symbolPosition.appendChild(symbolOnReel);
+    }
+    
+    var reelsView = document.getElementsByClassName("reelsView")[0];
+    
+       for (var i = 0; i< reelsetData.length; i++){
+       reelsViewResult = document.createElement("div");
+       reelsViewResult.className = "reelsViewResult reelsViewResult-" + i;
+       reelsView.appendChild(reelsViewResult);
     }
     
     //
@@ -78,17 +109,6 @@
     
     // Printout symbol position after click
     
-    function printSymbolPosition(symbol) {
-        
-        var symbolPosition = document.getElementsByClassName("symbolPosition")[0];
-        var reel = symbol.getAttribute("rs");
-        symbolPosition.className = "symbolOnReel symbolOnReel" + reel;
-            
-        var symbolNumber = symbol.getAttribute("number");         
-        symbolPosition.innerHTML = symbolNumber + ',';
-            
-
-    }
     
     //Print out reel after click
     
